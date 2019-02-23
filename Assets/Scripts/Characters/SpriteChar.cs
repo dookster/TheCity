@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DoodleStudio95;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,11 @@ public class SpriteChar : MonoBehaviour
     public SpriteRenderer back;
     public SpriteRenderer right;
     public SpriteRenderer left;
+
+    public DoodleAnimator frontAnim;
+    public DoodleAnimator backAnim;
+    public DoodleAnimator rightAnim;
+    public DoodleAnimator leftAnim;
 
     private float theta;
     private Vector3 a;
@@ -64,6 +70,14 @@ public class SpriteChar : MonoBehaviour
         }
     }
 
+    public void SetAnimationSpeed(float speed)
+    {        
+        frontAnim.speed = speed;
+        backAnim.speed = speed;
+        rightAnim.speed = speed;
+        leftAnim.speed = speed;
+    }
+
     private void ShowSprite(Side side)
     {
         front.enabled = false;
@@ -92,6 +106,6 @@ public class SpriteChar : MonoBehaviour
     private Rect guiPos = new Rect(0, 0, 720, 30);
     void OnGUI()
     {
-        GUI.Label(guiPos, "Angle from the Player is: " + theta + " and side=" + sideToShow);
+        //GUI.Label(guiPos, "Angle from the Player is: " + theta + " and side=" + sideToShow);
     }
 }

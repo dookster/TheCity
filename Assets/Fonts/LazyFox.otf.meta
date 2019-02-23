@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 33e372d59535ff548ac8f749019de246
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: LazyFox
+  fontNames:
+  - LazyFox
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 20d8054382047ab4ba5ae32b1aadd7af, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f06bbf3c20f6242409d51b4beba396b9
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Littlemorning
+  fontNames:
+  - Littlemorning
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d8cc10d4b04a8f94eb2f1b3682f50ee6, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
