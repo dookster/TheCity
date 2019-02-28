@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Littlemorning2
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1634892480
   material: {fileID: 21473084503578200}
-  materialHashCode: 0
+  materialHashCode: 697964619
   fontAssetType: 2
   m_fontInfo:
     Name: Littlemorning
     PointSize: 28
-    Scale: 0
+    Scale: 1
     CharacterCount: 95
     LineHeight: 32
     Baseline: 0
     Ascender: 24
-    CapHeight: 0
+    CapHeight: 20
     Descender: -7
     CenterLine: 0
     SuperscriptOffset: 24
@@ -34,7 +34,7 @@ MonoBehaviour:
     UnderlineThickness: 1.4
     strikethrough: 6.181818
     strikethroughThickness: 1.4
-    TabWidth: 0
+    TabWidth: 80
     Padding: 5
     AtlasWidth: 256
     AtlasHeight: 256
@@ -43,10 +43,10 @@ MonoBehaviour:
   - id: 32
     x: 5
     y: 251
-    width: 0
-    height: 0
+    width: 8
+    height: 31
     xOffset: 0
-    yOffset: 0
+    yOffset: 24
     xAdvance: 8
     scale: 1
   - id: 33
