@@ -6,6 +6,15 @@ using UnityEngine.AI;
 
 public class SpriteChar : MonoBehaviour
 {
+    [System.Serializable]
+    public struct OverLay
+    {
+        public DoodleAnimationFile front;
+        public DoodleAnimationFile back;
+        public DoodleAnimationFile right;
+        public DoodleAnimationFile left;
+    }
+
     public enum State { Standing = 0, Walking = 1 }
     public enum Side { Front = 0, Back = 1, Left = 2, Right = 3 }
 
@@ -23,15 +32,22 @@ public class SpriteChar : MonoBehaviour
     public SpriteRenderer right;
     public SpriteRenderer left;
 
-    public SpriteRenderer frontOver;
-    public SpriteRenderer backOver;
-    public SpriteRenderer rightOver;
-    public SpriteRenderer leftOver;
+    public SpriteRenderer frontOverRender;
+    public SpriteRenderer backOverRender;
+    public SpriteRenderer rightOverRender;
+    public SpriteRenderer leftOverRender;
+
+    public DoodleAnimator frontOverAnim;
+    public DoodleAnimator backOverAnim;
+    public DoodleAnimator rightOverAnim;
+    public DoodleAnimator leftOverAnim;
 
     public DoodleAnimator frontAnim;
     public DoodleAnimator backAnim;
     public DoodleAnimator rightAnim;
     public DoodleAnimator leftAnim;
+
+    public OverLay[] overlays;
 
     public NavMeshAgent navMeshAgent;
 
@@ -49,39 +65,52 @@ public class SpriteChar : MonoBehaviour
     {
         player = Camera.main.transform;
         quoteManager = GameObject.Find("QuoteManager").GetComponent<QuoteManager>();
-        Color c = colors[Random.Range(0, colors.Count)];        
+
+        // overlay
+        SetOverlay();
+
+        if (currentState == State.Walking)
+        {
+            MoveToRandomPoint();
+        }
+    }
+
+    private void SetOverlay()
+    {
+        Color c = colors[Random.Range(0, colors.Count)];
         front.color = c;
         back.color = c;
         right.color = c;
         left.color = c;
 
-        // hat?
-        if (Random.value >= 0.5f)
+        int overlayIndex = Random.Range(-1, overlays.Length);
+
+        if (overlayIndex >= 0)
         {
             hasOverlay = true;
 
-            frontOver.enabled = true;
-            backOver.enabled = true;
-            rightOver.enabled = true;
-            leftOver.enabled = true;
+            frontOverAnim.ChangeAnimation(overlays[overlayIndex].front);
+            backOverAnim.ChangeAnimation(overlays[overlayIndex].back);
+            rightOverAnim.ChangeAnimation(overlays[overlayIndex].right);
+            leftOverAnim.ChangeAnimation(overlays[overlayIndex].left);
+
+            frontOverRender.enabled = true;
+            backOverRender.enabled = true;
+            rightOverRender.enabled = true;
+            leftOverRender.enabled = true;
 
             c = overlayColors[Random.Range(0, overlayColors.Count)];
-            frontOver.color = c;
-            backOver.color = c;
-            rightOver.color = c;
-            leftOver.color = c;
+            frontOverRender.color = c;
+            backOverRender.color = c;
+            rightOverRender.color = c;
+            leftOverRender.color = c;
         }
         else
         {
-            frontOver.enabled = false;
-            backOver.enabled = false;
-            rightOver.enabled = false;
-            leftOver.enabled = false;
-        }
-
-        if (currentState == State.Walking)
-        {
-            MoveToRandomPoint();
+            frontOverRender.enabled = false;
+            backOverRender.enabled = false;
+            rightOverRender.enabled = false;
+            leftOverRender.enabled = false;
         }
     }
 
@@ -174,6 +203,11 @@ public class SpriteChar : MonoBehaviour
         backAnim.speed = speed;
         rightAnim.speed = speed;
         leftAnim.speed = speed;
+
+        frontOverAnim.speed = speed;
+        backOverAnim.speed = speed;
+        rightOverAnim.speed = speed;
+        leftOverAnim.speed = speed;
     }
 
     private void ShowSprite(Side side)
@@ -203,23 +237,23 @@ public class SpriteChar : MonoBehaviour
 
         if (hasOverlay)
         {
-            frontOver.enabled = false;
-            backOver.enabled = false;
-            leftOver.enabled = false;
-            rightOver.enabled = false;
+            frontOverRender.enabled = false;
+            backOverRender.enabled = false;
+            leftOverRender.enabled = false;
+            rightOverRender.enabled = false;
             switch (side)
             {
                 case Side.Front:
-                    frontOver.enabled = true;
+                    frontOverRender.enabled = true;
                     break;
                 case Side.Back:
-                    backOver.enabled = true;
+                    backOverRender.enabled = true;
                     break;
                 case Side.Left:
-                    leftOver.enabled = true;
+                    leftOverRender.enabled = true;
                     break;
                 case Side.Right:
-                    rightOver.enabled = true;
+                    rightOverRender.enabled = true;
                     break;
                 default:
                     break;

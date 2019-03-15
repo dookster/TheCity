@@ -14,6 +14,8 @@ public class InfoUI : MonoBehaviour
     public FirstPersonDrifter playerDrifter;
     public MouseLook mouseLook;
 
+    public QuoteManager quoteManager;
+
     void Start()
     {
         
@@ -21,7 +23,12 @@ public class InfoUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.F1))
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha1))
         {
             infoParent.SetActive(!infoParent.activeSelf);
         }
@@ -35,6 +42,7 @@ public class InfoUI : MonoBehaviour
                 playerDrifter.enabled = true;
                 handsParent.SetActive(true);
                 mouseLook.enabled = true;
+                quoteManager.SaveQuote(inputText.text);
             }
             else
             {
@@ -49,4 +57,6 @@ public class InfoUI : MonoBehaviour
             }
         }
     }
+
+
 }

@@ -391,14 +391,27 @@ MonoBehaviour:
   back: {fileID: 570978865}
   right: {fileID: 443339751}
   left: {fileID: 967445250}
-  frontOver: {fileID: 6600603911918563171}
-  backOver: {fileID: 8097473079929948889}
-  rightOver: {fileID: 3516789124561187192}
-  leftOver: {fileID: 3580490861744059568}
+  frontOverRender: {fileID: 6600603911918563171}
+  backOverRender: {fileID: 8097473079929948889}
+  rightOverRender: {fileID: 3516789124561187192}
+  leftOverRender: {fileID: 3580490861744059568}
+  frontOverAnim: {fileID: 5391300724603738691}
+  backOverAnim: {fileID: 6875110612618580344}
+  rightOverAnim: {fileID: 7795235592916069570}
+  leftOverAnim: {fileID: 7865483128916659697}
   frontAnim: {fileID: 430130300274829526}
   backAnim: {fileID: 570978864}
   rightAnim: {fileID: 443339750}
   leftAnim: {fileID: 967445249}
+  overlays:
+  - front: {fileID: 11400000, guid: a4f26a8d53a761b4cab2f94a934cbc6f, type: 2}
+    back: {fileID: 11400000, guid: a4f26a8d53a761b4cab2f94a934cbc6f, type: 2}
+    right: {fileID: 11400000, guid: 4b94c7968d3f8094489e4bfed0dc30d5, type: 2}
+    left: {fileID: 11400000, guid: 4b94c7968d3f8094489e4bfed0dc30d5, type: 2}
+  - front: {fileID: 11400000, guid: cbad157e510f7e84480fb0f1e2039c81, type: 2}
+    back: {fileID: 11400000, guid: f09acae66df027342957fa4dcc0e53e1, type: 2}
+    right: {fileID: 11400000, guid: 28237f80d974fa840a487566909e51f4, type: 2}
+    left: {fileID: 11400000, guid: 28237f80d974fa840a487566909e51f4, type: 2}
   navMeshAgent: {fileID: 430130299702625301}
   theta: 0
   angle: {x: 0, y: 0, z: 0}
@@ -767,7 +780,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 213818338401651604, guid: a4f26a8d53a761b4cab2f94a934cbc6f, type: 2}
+  m_Sprite: {fileID: 213905779066175162, guid: a4f26a8d53a761b4cab2f94a934cbc6f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

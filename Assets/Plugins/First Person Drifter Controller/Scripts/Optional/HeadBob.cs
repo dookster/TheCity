@@ -7,13 +7,13 @@ using System.Collections;
 
 public class HeadBob : MonoBehaviour
 {	
-	private float bobbingSpeed = 0.25f; 
+	public float bobbingSpeed = 0.25f; 
 	public float bobbingAmount = 0.05f; 
 	public float  midpoint = 0.6f; 
 	
 	private float timer = 0.0f; 
  
-	void Update ()
+	void LateUpdate ()
 	{ 
 	    float waveslice = 0.0f; 
 	    float horizontal = Input.GetAxis("Horizontal"); 
@@ -26,7 +26,7 @@ public class HeadBob : MonoBehaviour
 	    else
 	    { 
 	       waveslice = Mathf.Sin(timer); 
-	       timer = timer + bobbingSpeed; 
+	       timer = timer + bobbingSpeed * Time.deltaTime;
 	       if (timer > Mathf.PI * 2f)
 	       { 
 	          timer = timer - (Mathf.PI * 2f); 
@@ -40,7 +40,7 @@ public class HeadBob : MonoBehaviour
 	       translateChange = totalAxes * translateChange;
 	       
 	       Vector3 localPos = transform.localPosition;
-	       localPos.y = midpoint + translateChange * Time.timeScale; 
+           localPos.y = midpoint + translateChange;// * Time.timeScale; 
 	       transform.localPosition = localPos;
 	    } 
 	    else
