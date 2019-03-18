@@ -27,9 +27,8 @@ public class PlayerTalker : MonoBehaviour
                     {
                         closestHit = rhit;
                     }
-                    quoteManager.ShowQuote(closestHit.collider.GetComponent<SpriteChar>());
                 }
-                
+                quoteManager.ShowQuote(closestHit.collider.GetComponent<SpriteChar>());
             }
         }
     }
