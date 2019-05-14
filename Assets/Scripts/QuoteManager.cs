@@ -24,27 +24,27 @@ public class QuoteManager : MonoBehaviour
     public string quotesRawFromOnline;
 
     public List<string> quotesOld;
-    public List<string> quotesFromOnline;
-    public List<string> quotesFromLocal;
+    //public List<string> quotesFromOnline;
 
-    private bool wasLocalLast;
+    private bool hasGottenOnlineQuotes;
 
     void Start()
     {        
         quotesOld = new List<string>(quotesRaw.Split('\n'));
-        quotesFromOnline = new List<string>(quotesRawFromOnline.Split('\n'));
-        LoadQuotesFromFile();
+        StartCoroutine(ReadQuotesFromOnline());
+        //quotesFromOnline = new List<string>(quotesRawFromOnline.Split('\n'));
+
     }
 
-    void Update()
-    {
+    //void Update()
+    //{
 
-        if (Input.GetKeyUp(KeyCode.F11))
-        {
-            File.Delete(path);
-            LoadQuotesFromFile();
-        }
-    }
+    //    if (Input.GetKeyUp(KeyCode.F11))
+    //    {
+    //        File.Delete(path);
+    //        LoadQuotesFromFile();
+    //    }
+    //}
 
     public void ShowQuote(SpriteChar talker)
     {
@@ -58,45 +58,50 @@ public class QuoteManager : MonoBehaviour
 
     private void SetQuoteText()
     {
-        // one third chance to get local text, rest is even
-
-        int totaltCount = quotesFromOnline.Count + quotesOld.Count;
-        float totalChance = 0.66f / totaltCount;
-        float r = Random.value;
-        if (r < 0.2f && quotesFromLocal.Count > 0 && !wasLocalLast)
-        {
-            bubble.SetText(quotesFromLocal[Random.Range(0, quotesFromLocal.Count)], 2);
-            wasLocalLast = true;
-        }
-        else if (r < 0.2f + (totalChance * quotesFromOnline.Count))
-        {
-            bubble.SetText(quotesFromOnline[Random.Range(0, quotesFromOnline.Count)],1);
-            wasLocalLast = false;
-        }
-        else
-        {
-            bubble.SetText(quotesOld[Random.Range(0, quotesOld.Count)], 0);
-            wasLocalLast = false;
-        }
+        bubble.SetText(quotesOld[Random.Range(0, quotesOld.Count)], 1);
     }
 
-    private void LoadQuotesFromFile()
-    {
-        //AssetDatabase.ImportAsset(path);
-        if (!File.Exists(path))
-        {
-            StreamWriter sw = System.IO.File.CreateText(path);
-            sw.Close();
-        }
+    //private void SetQuoteTextOld()
+    //{
+    //    // one third chance to get local text, rest is even
 
-        StreamReader sr = new StreamReader(path);
-        string fileString = sr.ReadToEnd();
-        sr.Close();
+    //    int totaltCount = quotesFromOnline.Count + quotesOld.Count;
+    //    float totalChance = 0.66f / totaltCount;
+    //    float r = Random.value;
+    //    if (r < 0.2f && quotesFromLocal.Count > 0 && !wasLocalLast)
+    //    {
+    //        bubble.SetText(quotesFromLocal[Random.Range(0, quotesFromLocal.Count)], 2);
+    //        wasLocalLast = true;
+    //    }
+    //    else if (r < 0.2f + (totalChance * quotesFromOnline.Count))
+    //    {
+    //        bubble.SetText(quotesFromOnline[Random.Range(0, quotesFromOnline.Count)],1);
+    //        wasLocalLast = false;
+    //    }
+    //    else
+    //    {
+    //        bubble.SetText(quotesOld[Random.Range(0, quotesOld.Count)], 0);
+    //        wasLocalLast = false;
+    //    }
+    //}
 
-        List<string> str = new List<string>(fileString.Replace("\n", "").Split('#'));
-        str.RemoveAll((s) => string.IsNullOrWhiteSpace(s));
-        quotesFromLocal = str;
-    }
+    //private void LoadQuotesFromFile()
+    //{
+    //    //AssetDatabase.ImportAsset(path);
+    //    if (!File.Exists(path))
+    //    {
+    //        StreamWriter sw = System.IO.File.CreateText(path);
+    //        sw.Close();
+    //    }
+
+    //    StreamReader sr = new StreamReader(path);
+    //    string fileString = sr.ReadToEnd();
+    //    sr.Close();
+
+    //    List<string> str = new List<string>(fileString.Replace("\n", "").Split('#'));
+    //    str.RemoveAll((s) => string.IsNullOrWhiteSpace(s));
+    //    quotesFromLocal = str;
+    //}
 
     public void SaveQuote(string text)
     {
@@ -105,13 +110,13 @@ public class QuoteManager : MonoBehaviour
             return;
         }
 
-        if(Application.platform != RuntimePlatform.WebGLPlayer)
-        {
-            StreamWriter writer = new StreamWriter(path, true);
-            writer.WriteLine("\n#\n" + text);
-            writer.Close();
-            quotesFromLocal.Add(text);
-        }
+        //if(Application.platform != RuntimePlatform.WebGLPlayer)
+        //{
+        //    StreamWriter writer = new StreamWriter(path, true);
+        //    writer.WriteLine("\n#\n" + text);
+        //    writer.Close();
+        //    quotesFromLocal.Add(text);
+        //}
         UploadQuote(text);
     }
 
@@ -153,6 +158,37 @@ public class QuoteManager : MonoBehaviour
         //    Debug.Log("error");
         //    Debug.Log(w.error);
         //}
+    }
+
+    IEnumerator ReadQuotesFromOnline()
+    {
+        yield return new WaitForEndOfFrame();
+        string quotesUrl = "https://aergia.dk/cityquotes.txt";
+        int attempts = 0;
+        while (!hasGottenOnlineQuotes || attempts > 3)
+        {
+            attempts++;
+            WWW www = new WWW(quotesUrl);
+            yield return www;
+            if (string.IsNullOrEmpty(www.error))
+            {
+                if (!string.IsNullOrEmpty(www.text))
+                {
+                    Debug.Log("Got quotes from online!");
+                    quotesOld.AddRange(www.text.Split('\n'));
+                }
+                else
+                {
+                    Debug.Log("Empty result!");
+                }
+                hasGottenOnlineQuotes = true;
+            }
+            else
+            {
+                Debug.Log("Error getting online quotes, trying again later: " + www.error);
+            }
+            yield return new WaitForSeconds(10);
+        }
     }
 
 }
